@@ -3,7 +3,7 @@ from typing import Optional
 
 
 @dataclass
-class ChattyRuntimeContext:
+class GenesisRuntimeContext:
     pinecone_environment: Optional[str] = None
     pinecone_api_key: Optional[str] = None
     openai_api_key: Optional[str] = None
