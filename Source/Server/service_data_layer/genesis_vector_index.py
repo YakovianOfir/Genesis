@@ -3,16 +3,14 @@ import atexit
 import pinecone
 from pinecone import Index
 
-from genesis.service_infra.genesis_context import GenesisRuntimeContext
-from genesis.service_data_layer.genesis_pinecone_store import GenesisPineconeVectorStore
-from genesis.service_infra.genesis_synchronization import CriticalSection, Locker
+from genesis.Source.Server.service_infra.genesis_context import GenesisRuntimeContext
+from genesis.Source.Server.service_infra.genesis_synchronization import CriticalSection, Locker
 
 
 class GenesisPineconeIndex:
 
-    def __init__(self, genesis_context: GenesisRuntimeContext, genesis_store: GenesisPineconeVectorStore) -> None:
+    def __init__(self, genesis_context: GenesisRuntimeContext) -> None:
         self._genesis_context = genesis_context
-        self._genesis_store = genesis_store
         self._index_lock = CriticalSection()
         atexit.register(self._delete_index())
         self._create_index()
@@ -20,7 +18,8 @@ class GenesisPineconeIndex:
         self._index = self._fetch_index()
 
     def __str__(self) -> str:
-        return str(self._index.describe_index_stats())
+        with Locker.acquire(self._index_lock):
+            return str(self._index.describe_index_stats())
 
     def _create_index(self) -> None:
         with Locker.acquire(self._index_lock):

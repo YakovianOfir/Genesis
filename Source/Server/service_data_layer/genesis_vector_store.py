@@ -1,7 +1,7 @@
 import pinecone
 
-from genesis.service_infra.genesis_context import GenesisRuntimeContext
-from genesis.service_infra.genesis_synchronization import OneTimeLock, Locker, CriticalSection
+from genesis.Source.Server.service_infra.genesis_context import GenesisRuntimeContext
+from genesis.Source.Server.service_infra.genesis_synchronization import OneTimeLock, Locker
 
 
 class GenesisPineconeVectorStore:
