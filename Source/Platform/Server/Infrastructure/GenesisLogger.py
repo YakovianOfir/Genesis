@@ -3,7 +3,10 @@ from __future__ import annotations
 import logging
 import sys
 
-from genesis.Source.Server.service_infra.genesis_constants import GENESIS_COMPONENT_SUBSYSTEM, GENESIS_TRACE_LEVEL_VERBOSE
+from Source.Platform.Server.Infrastructure.GenesisConstants import (
+    GENESIS_COMPONENT_SUBSYSTEM,
+    GENESIS_TRACE_LEVEL_VERBOSE
+)
 
 logger = logging.getLogger(f"genesis.ai.{GENESIS_COMPONENT_SUBSYSTEM}")
 

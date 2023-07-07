@@ -3,9 +3,9 @@ import sys
 import traceback
 from enum import IntEnum
 
-from genesis.Source.Server.service_infra.genesis_context import GenesisRuntimeContext
-from genesis.Source.Server.service_infra.genesis_environment import GenesisEnvironment
-from genesis.Source.Server.service_infra.genesis_logger import logger
+from Source.Platform.Server.Infrastructure.GenesisContext import GenesisRuntimeContext
+from Source.Platform.Server.Infrastructure.GenesisEnvironment import GenesisEnvironment
+from Source.Platform.Server.Infrastructure.GenesisLogger import logger
 
 
 class GenesisReturnValue(IntEnum):
