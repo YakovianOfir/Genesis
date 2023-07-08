@@ -3,8 +3,8 @@ import atexit
 import pinecone
 from pinecone import Index
 
-from Source.Platform.Server.Infrastructure.GenesisContext import GenesisRuntimeContext
-from Source.Platform.Server.Infrastructure.GenesisSynchronization import CriticalSection, Locker
+from Source.Platform.Engine.Settings.GenesisContext import GenesisRuntimeContext
+from Source.Platform.Engine.Infrastructure.GenesisSynchronization import CriticalSection, Locker
 
 
 class GenesisPineconeIndex:

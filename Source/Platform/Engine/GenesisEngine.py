@@ -3,22 +3,22 @@ import sys
 import traceback
 from enum import IntEnum
 
-from Source.Platform.Server.Infrastructure.GenesisContext import GenesisRuntimeContext
-from Source.Platform.Server.Infrastructure.GenesisEnvironment import GenesisEnvironment
-from Source.Platform.Server.Infrastructure.GenesisLogger import logger
+from Source.Platform.Engine.Settings.GenesisContext import GenesisRuntimeContext
+from Source.Platform.Engine.Infrastructure.GenesisEnvironment import GenesisEnvironment
+from Source.Platform.Engine.Infrastructure.GenesisLogger import logger
 
 
-class GenesisReturnValue(IntEnum):
+class GenesisEngineReturnValue(IntEnum):
     Success = 0
     InvalidCmd = -1
     RuntimeFailure = -2
     CriticalFailure = -3
 
-def genesis_launch_interactive_engine(genesis_context: GenesisRuntimeContext):
+def genesis_engine_launch_applicative_engine(genesis_context: GenesisRuntimeContext):
     pass
 
 
-def genesis_initialize_runtime_context(genesis_cmdline: argparse.Namespace) -> GenesisRuntimeContext:
+def genesis_engine_initialize_runtime_context(genesis_cmdline: argparse.Namespace) -> GenesisRuntimeContext:
     genesis_context = dict(
         {
             "pinecone_environment": GenesisEnvironment.pinecone_environment(),
@@ -36,7 +36,7 @@ def genesis_initialize_runtime_context(genesis_cmdline: argparse.Namespace) -> G
     return GenesisRuntimeContext(**genesis_context)
 
 
-def genesis_parse_command_line() -> argparse.Namespace:
+def genesis_engine_parse_command_line() -> argparse.Namespace:
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--model-name", help="The model used for text embeddings", default="text-embedding-ada-002")
     parser.add_argument("--model-tokens", help="The number of tokens allowed by the model", default="3800")
@@ -48,33 +48,33 @@ def genesis_parse_command_line() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def genesis_platform_entry_point() -> GenesisReturnValue:
-    rv = GenesisReturnValue.Success
+def genesis_server_entry_point() -> GenesisEngineReturnValue:
+    rv = GenesisEngineReturnValue.Success
 
     try:
-        logger.info("[Genesis-AI] (Alpha): Interpreting Genesis command line arguments.")
-        genesis_cmdline = genesis_parse_command_line()
+        logger.info("[Genesis-Engine]: Interpreting command line arguments.")
+        genesis_cmdline = genesis_engine_parse_command_line()
 
-        logger.info("[Genesis-AI] (Alpha): Initializing Genesis runtime context.")
-        genesis_context = genesis_initialize_runtime_context(genesis_cmdline)
+        logger.info("[Genesis-Engine]: Initializing Genesis runtime context.")
+        genesis_context = genesis_engine_initialize_runtime_context(genesis_cmdline)
 
-        logger.info("[Genesis-AI] (Alpha): Launching Genesis interactive engine.")
-        genesis_launch_interactive_engine(genesis_context)
+        logger.info("[Genesis-Engine]: Launching Genesis interactive engine.")
+        genesis_engine_launch_applicative_engine(genesis_context)
 
-        logger.info("[Genesis-AI] (Alpha): Done (OK).")
+        logger.info("[Genesis-Engine]: Done (OK).")
 
     except Exception as e:
-        logger.error(f"[Genesis-AI] (Alpha): (Runtime-Error) [(Fault -> [{str(e)}])].")
-        rv = GenesisReturnValue.RuntimeFailure
+        logger.error(f"[Genesis-Engine]: (Runtime-Error) [(Fault -> [{str(e)}])].")
+        rv = GenesisEngineReturnValue.RuntimeFailure
         traceback.print_exc()
 
     except:
-        logger.critical(f"[Genesis-AI] (Alpha): (Critical-Error) [(Fault -> {str(sys.exc_info())})].")
-        rv = GenesisReturnValue.CriticalFailure
+        logger.critical(f"[Genesis-Engine]: (Critical-Error) [(Fault -> {str(sys.exc_info())})].")
+        rv = GenesisEngineReturnValue.CriticalFailure
         traceback.print_exc()
 
     return rv
 
 
 if __name__ == "__main__":
-    sys.exit(genesis_platform_entry_point().value)
+    sys.exit(genesis_server_entry_point().value)

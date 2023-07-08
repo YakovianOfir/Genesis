@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import sys
 
-from Source.Platform.Server.Infrastructure.GenesisConstants import (
+from Source.Platform.Engine.Infrastructure.GenesisConstants import (
     GENESIS_COMPONENT_SUBSYSTEM,
     GENESIS_TRACE_LEVEL_VERBOSE
 )
